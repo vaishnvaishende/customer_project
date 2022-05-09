@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SHOW CUSTOMER FORM</title>
+{% endblock %}
+
+{% block content %}
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">CUSTOMER ID</th>
+        <th scope="col">NAME</th>
+        <th scope="col">SURNAME</th>
+        <th scope="col">EMAIL ID</th>
+        <th scope="col">GENDER</th>
+        <th scope="col">PHONE NO</th>
+        <th scope="col">ADDRESS</th>
+        <th scope="col">UPDATE</th>
+        <th scope="col">DELETE</th>
+      </tr>
+    </thead>
+  <tbody>
+
+  {% for i in obj %}
+  <tr>
+      <td>{{i.cid}}</td>
+      <td>{{i.cname}}</td>
+      <td>{{i.surname}}</td>
+      <td>{{i.email}}</td>
+      <td>{{i.gender}}</td>
+      <td>{{i.phoneno}}</td>
+      <td>{{i.address}}</td>
+      <td><button class="btn btn-danger"><a href="{% url 'update_url' i.cid %}">UPDATE</a></button></td>
+      <td><button class="btn btn-warning"><a href="{% url 'delete_url' i.cid %}">DELETE</a></button></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+
+  <div align="center">
+    {% if obj.has_previous %}
+    <a href="{% url 'show_url' obj.previous_page_number %}"><b>PREVIOUS</b></a>
+    {% endif %}
+    <span>
+        page{{obj.number}} of {{obj.paginator_page_number}}
+    </span>
+    {% if obj.has_next %}
+      <a href="{% url 'show_url' obj.next_page_number %}"><b>NEXT</b></a>
+    {% endif %}
+  </div>
+{% endblock %}
